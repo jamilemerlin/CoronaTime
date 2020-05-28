@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     public AudioSource audioincrementlife;
     public AudioSource audiodecrementlife;
     public HealthBar healthBar;
+    public EndGame endGame;
+
 
 
 
@@ -21,7 +23,7 @@ public class Player : MonoBehaviour
     {
         gamemanager = GameObject.Find("GameManager").GetComponent<GameManager>();
         healthBar.SetMaxHealth(100);
-
+        gameObject.SetActive(true);
     }
     void Update()
     {
@@ -44,26 +46,29 @@ public class Player : MonoBehaviour
 
     public void IncrementLife()
     {
+        audioincrementlife.Play(0);
         if (lifeCount < 100 && lifeCount > 0)
         {
             lifeCount += 25;
             healthBar.SetHealth(lifeCount);
-            audioincrementlife.Play(0);
         }
 
     }
 
     public void DecrementLife()
     {
-        if (lifeCount > 0)
+        audiodecrementlife.Play(0);
+        if (lifeCount > 10)
         {
             lifeCount -= 10;
             healthBar.SetHealth(lifeCount);
-            audiodecrementlife.Play(0);
+
         }
-        else
+        else if (lifeCount <= 10)
         {
-            Debug.Log("Die");
+            lifeCount = 0;
+            healthBar.SetHealth(lifeCount);
+            endGame.SetGame();
         }
     }
 }

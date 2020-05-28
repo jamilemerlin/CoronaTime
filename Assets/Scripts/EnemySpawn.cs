@@ -43,15 +43,18 @@ public class EnemySpawn : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "ColliderRight")
+        if (other.gameObject.tag == "Player")
+        {
+            player.DecrementLife();
+            gameObject.SetActive(false);
+        }
+        else if (other.gameObject.tag == "ColliderRight")
         {
             colliderScreen = true;
-            //transform.position += new Vector3(-2f, 0, 0);
         }
         else if (other.gameObject.tag == "ColliderLeft")
         {
             colliderScreen = false;
-            //transform.position += new Vector3(2f, 0, 0);
         }
         else if (other.gameObject.tag == "ColliderDown")
         {
@@ -60,12 +63,6 @@ public class EnemySpawn : MonoBehaviour
             {
                 gameObject.SetActive(false);
             }
-
-        }
-        else if (other.gameObject.tag == "Player")
-        {
-            player.DecrementLife();
-            gameObject.SetActive(false);
         }
     }
 }

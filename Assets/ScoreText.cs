@@ -7,7 +7,7 @@ public class ScoreText : MonoBehaviour
 {
     public Text TimerText;
     public bool playing;
-    private float Timer;
+    public float Timer;
 
     void Update()
     {
@@ -15,7 +15,7 @@ public class ScoreText : MonoBehaviour
         {
             Timer += Time.deltaTime;
             int score = Mathf.FloorToInt(Timer);
-            TimerText.text = "Score: " + score.ToString("000");
+            TimerText.text = "Time: " + score.ToString("000");
         }
     }
 

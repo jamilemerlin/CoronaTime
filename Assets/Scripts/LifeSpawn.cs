@@ -28,7 +28,12 @@ public class LifeSpawn : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "ColliderRight")
+        if (other.gameObject.tag == "Player")
+        {
+            player.IncrementLife();
+            gameObject.SetActive(false);
+        }
+        else if (other.gameObject.tag == "ColliderRight")
         {
             colliderScreen = true;
             transform.position += new Vector3(0, -1, 0);
@@ -40,18 +45,10 @@ public class LifeSpawn : MonoBehaviour
         }
         else if (other.gameObject.tag == "ColliderDown")
         {
-            //colliderScreen = true;
             if (gameObject != null)
             {
                 gameObject.SetActive(false);
             }
         }
-        else if (other.gameObject.tag == "Player")
-        {
-            player.IncrementLife();
-            gameObject.SetActive(false);
-        }
     }
-
-
 }
