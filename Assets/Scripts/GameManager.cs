@@ -5,66 +5,107 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 
 {
-    public GameObject enemy;
-    public GameObject life;
-    public float spawnRateEnemy = 0.5f;
-    public float spawnRateLife = 3f;
-    float randomX;
-    float nextSpawnEnemy;
-    float nextSpawnLife;
-    public int lifeCount = 100;
-    public AudioSource audioincrementlife;
-    public AudioSource audiodecrementlife;
+    public int amountOfEnemies;
+    public int amountOfLifes;
+    public GameObject[] enemy;
+    public List<EnemySpawn> enemiesSpawn;
+    public GameObject[] life;
+    public List<LifeSpawn> lifesSpawn;
 
     void Start()
     {
+        SpawnPositionEnemies();
+
+        SpawnPositionLifes();
+
+        StartCoroutine(SpawnRandomEnemies());
+
+        StartCoroutine(SpawnRandomLifes());
 
     }
 
-    void Update()
+
+    void SpawnPositionEnemies()
     {
-        if (Time.time > nextSpawnEnemy)
+        int index = 0;
+        for (int i = 0; i < enemy.Length * amountOfEnemies; i++)
         {
-            nextSpawnEnemy = Time.time + spawnRateEnemy;
-            Vector3 whereToSpawn = SpawnPosition();
-            Instantiate(enemy, whereToSpawn, Quaternion.identity);
-        }
+            GameObject obj = Instantiate(enemy[index], transform.position, Quaternion.identity);
+            obj.SetActive(false);
+            enemiesSpawn.Add(obj.GetComponent<EnemySpawn>());
 
-        if (Time.time > nextSpawnLife)
-        {
-            nextSpawnLife = Time.time + spawnRateLife;
-            Vector3 whereToSpawn = SpawnPosition();
-            Instantiate(life, whereToSpawn, Quaternion.identity);
+            index++;
+            if (index == enemy.Length)
+            {
+                index = 0;
+            }
         }
-
     }
 
-    Vector3 SpawnPosition()
+    void SpawnPositionLifes()
     {
-        randomX = Random.Range(-7f, 7f);
-        return new Vector3(randomX, 7, 0);
+        int index = 0;
+        for (int i = 0; i < life.Length * amountOfLifes; i++)
+        {
+            GameObject obj = Instantiate(life[index], transform.position, Quaternion.identity);
+            obj.SetActive(false);
+            lifesSpawn.Add(obj.GetComponent<LifeSpawn>());
+
+            index++;
+            if (index == life.Length)
+            {
+                index = 0;
+            }
+        }
     }
 
-    public void IncrementLife()
+    IEnumerator SpawnRandomEnemies()
     {
-        if (lifeCount < 100 && lifeCount > 0)
-        {
-            lifeCount += 10;
-            audioincrementlife.Play(0);
-        }
+        yield return new WaitForSeconds(0.3f);
 
+        int index = Random.Range(0, enemiesSpawn.Count);
+
+        while (true)
+        {
+            EnemySpawn enemy = enemiesSpawn[index];
+
+            if (!enemy.gameObject.activeInHierarchy)
+            {
+                enemiesSpawn[index].gameObject.SetActive(true);
+                float x = Random.Range(-10f, 10f);
+                enemiesSpawn[index].transform.position = new Vector3(x, 7, 0);
+                break;
+            }
+            else
+            {
+                index = Random.Range(0, enemiesSpawn.Count);
+            }
+        }
+        StartCoroutine(SpawnRandomEnemies());
     }
 
-    public void DecrementLife()
+    IEnumerator SpawnRandomLifes()
     {
-        if (lifeCount > 0)
+        yield return new WaitForSeconds(1.5f);
+
+        int index = Random.Range(0, lifesSpawn.Count);
+
+        while (true)
         {
-            lifeCount -= 20;
-            audiodecrementlife.Play(0);
+            LifeSpawn life = lifesSpawn[index];
+
+            if (!life.gameObject.activeInHierarchy)
+            {
+                lifesSpawn[index].gameObject.SetActive(true);
+                float x = Random.Range(-10f, 10f);
+                lifesSpawn[index].transform.position = new Vector3(x, 7, 0);
+                break;
+            }
+            else
+            {
+                index = Random.Range(0, lifesSpawn.Count);
+            }
         }
-        else
-        {
-            Debug.Log("Die");
-        }
+        StartCoroutine(SpawnRandomLifes());
     }
 }

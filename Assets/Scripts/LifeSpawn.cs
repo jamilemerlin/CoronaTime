@@ -4,62 +4,52 @@ using UnityEngine;
 
 public class LifeSpawn : MonoBehaviour
 {
-    public float speed = 6.0f;
-    private float moviment = 0;
+    public float speed = 3.0f;
     private bool colliderScreen = false;
 
-    private GameManager gamemanager;
+    private Player player;
 
 
     void Start()
     {
-        gamemanager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     void Update()
-    {   
+    {
         if (gameObject == null)
         {
             return;
         }
-        moviment += Time.deltaTime;
 
-        if(moviment > 0.5f){
-            if (colliderScreen == false)
-            {
-                transform.position += new Vector3(2, 0, 0);
-                moviment = 0;
-            }else
-            {
-                transform.position += new Vector3(-2, 0, 0);
-                moviment = 0;
-            }
-        }
-
-        Vector3 moveDirection = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, 0); 
+        Vector3 moveDirection = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, 0);
         transform.position = moveDirection;
     }
 
-    void OnTriggerEnter2D (Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "ColliderRight"){
+        if (other.gameObject.tag == "ColliderRight")
+        {
             colliderScreen = true;
             transform.position += new Vector3(0, -1, 0);
-        }else if (other.gameObject.tag == "ColliderLeft"){
-            colliderScreen = false;
+        }
+        else if (other.gameObject.tag == "ColliderLeft")
+        {
+            colliderScreen = true;
             transform.position += new Vector3(0, -1, 0);
         }
         else if (other.gameObject.tag == "ColliderDown")
         {
+            //colliderScreen = true;
             if (gameObject != null)
             {
-                Destroy(gameObject);
-            } 
+                gameObject.SetActive(false);
+            }
         }
-        else if(other.gameObject.tag == "Player")
+        else if (other.gameObject.tag == "Player")
         {
-            gamemanager.IncrementLife();
-            Destroy(gameObject);
+            player.IncrementLife();
+            gameObject.SetActive(false);
         }
     }
 

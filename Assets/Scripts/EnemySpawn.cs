@@ -7,60 +7,65 @@ public class EnemySpawn : MonoBehaviour
     public float speed = 6.0f;
     private float moviment = 0;
     public bool colliderScreen = false;
-    private GameManager gamemanager;
+    private Player player;
 
     void Start()
     {
-        gamemanager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        player = GameObject.Find("Player").GetComponent<Player>();
 
     }
 
     void Update()
-    {   
+    {
         if (gameObject == null)
         {
             return;
         }
         moviment += Time.deltaTime;
 
-        if(moviment > 0.5f){
+        if (moviment > 0.6f)
+        {
             if (colliderScreen == false)
             {
                 transform.position += new Vector3(2, 0, 0);
                 moviment = 0;
-            }else
+            }
+            else
             {
                 transform.position += new Vector3(-2, 0, 0);
                 moviment = 0;
             }
         }
 
-        Vector3 moveDirection = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, 0); 
+        Vector3 moveDirection = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, 0);
         transform.position = moveDirection;
     }
 
-    void OnTriggerEnter2D (Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "ColliderRight"){
+        if (other.gameObject.tag == "ColliderRight")
+        {
             colliderScreen = true;
-            transform.position += new Vector3(0, -1, 0);
-        }else if (other.gameObject.tag == "ColliderLeft"){
+            //transform.position += new Vector3(-2f, 0, 0);
+        }
+        else if (other.gameObject.tag == "ColliderLeft")
+        {
             colliderScreen = false;
-            transform.position += new Vector3(0, -1, 0);
+            //transform.position += new Vector3(2f, 0, 0);
         }
         else if (other.gameObject.tag == "ColliderDown")
         {
             colliderScreen = true;
             if (gameObject != null)
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
-            
+
         }
-        else if(other.gameObject.tag == "Player")
+        else if (other.gameObject.tag == "Player")
         {
-            gamemanager.DecrementLife();
-            Destroy(gameObject);
+            player.DecrementLife();
+            gameObject.SetActive(false);
         }
     }
 }

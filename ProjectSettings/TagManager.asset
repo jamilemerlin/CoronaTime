@@ -7,6 +7,8 @@ TagManager:
   - ColliderRight
   - ColliderLeft
   - ColliderDown
+  - Enemy
+  - Life
   layers:
   - Default
   - TransparentFX
