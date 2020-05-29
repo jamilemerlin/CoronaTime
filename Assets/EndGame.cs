@@ -10,6 +10,7 @@ public class EndGame : MonoBehaviour
     public Text SubText;
     public Text GameOverScore;
     public ScoreText scoreText;
+    public Text Name;
     public bool IsDead;
 
 
@@ -47,5 +48,12 @@ public class EndGame : MonoBehaviour
     {
         IsDead = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void SaveScore()
+    {
+        PlayerPrefs.SetString("Name", Name.text);
+        PlayerPrefs.SetInt("Score", Mathf.FloorToInt(scoreText.Timer));
+        PlayerPrefs.Save();
     }
 }
