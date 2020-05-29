@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a9107387aed9d19a1829174c0e2013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfEnemies: 10
+  amountOfEnemies: 15
   amountOfLifes: 3
   enemy:
   - {fileID: 9082693144930824857, guid: b98c751d436d03de0b672275cd82f828, type: 3}

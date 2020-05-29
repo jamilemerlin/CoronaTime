@@ -10,11 +10,6 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    public void About()
-    {
-        Debug.Log("About");
-    }
-
     public void Ranking()
     {
         Debug.Log("Ranking");
