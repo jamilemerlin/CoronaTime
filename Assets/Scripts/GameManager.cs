@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] life;
     public List<LifeSpawn> lifesSpawn;
 
+
     void Start()
     {
         SpawnPositionEnemies();

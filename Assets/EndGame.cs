@@ -35,7 +35,7 @@ public class EndGame : MonoBehaviour
             SubText.gameObject.SetActive(true);
             GameOverScore.gameObject.SetActive(true);
             Text.text = "Game Over";
-            SubText.text = "Press Enter to Restart";
+            SubText.text = "Press Enter to Try Again";
             GameOverScore.text = "Score: " + Mathf.FloorToInt(scoreText.Timer).ToString("000");
             scoreText.gameObject.SetActive(false);
         }
