@@ -25,16 +25,24 @@ public class EnemySpawn : MonoBehaviour
 
         if (moviment > 0.6f)
         {
+            // Random... esquerda, centro, direita
+            // float x = Random.Range(0f, 100f);
             if (colliderScreen == false)
             {
-                transform.position += new Vector3(2, 0, 0);
-                moviment = 0;
+                if (transform.position.x < 8)
+                {
+                    transform.position += new Vector3(2, 0, 0);
+                }
             }
             else
             {
-                transform.position += new Vector3(-2, 0, 0);
-                moviment = 0;
+                if (transform.position.x > -8)
+                {
+                    transform.position += new Vector3(-2, 0, 0);
+                }
             }
+
+            moviment = 0;
         }
 
         Vector3 moveDirection = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, 0);
@@ -51,10 +59,12 @@ public class EnemySpawn : MonoBehaviour
         else if (other.gameObject.tag == "ColliderRight")
         {
             colliderScreen = true;
+            Debug.Log("trigger right");
         }
         else if (other.gameObject.tag == "ColliderLeft")
         {
             colliderScreen = false;
+            Debug.Log("trigger left");
         }
         else if (other.gameObject.tag == "ColliderDown")
         {
