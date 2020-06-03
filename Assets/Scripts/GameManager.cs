@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
             {
                 enemiesSpawn[index].gameObject.SetActive(true);
                 float x = Random.Range(-10f, 10f);
-                enemiesSpawn[index].transform.position = new Vector3(x, 7, 0);
+                enemiesSpawn[index].transform.position = new Vector3(x, 10, 0);
                 break;
             }
             else
@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
             {
                 lifesSpawn[index].gameObject.SetActive(true);
                 float x = Random.Range(-10f, 10f);
-                lifesSpawn[index].transform.position = new Vector3(x, 7, 0);
+                lifesSpawn[index].transform.position = new Vector3(x, 10, 0);
                 break;
             }
             else

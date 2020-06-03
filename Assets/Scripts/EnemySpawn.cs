@@ -5,8 +5,7 @@ using UnityEngine;
 public class EnemySpawn : MonoBehaviour
 {
     public float speed = 6.0f;
-    private float moviment = 0;
-    public bool colliderScreen = false;
+    private float movement = 0;
     private Player player;
 
     void Start()
@@ -21,28 +20,27 @@ public class EnemySpawn : MonoBehaviour
         {
             return;
         }
-        moviment += Time.deltaTime;
+        movement += Time.deltaTime;
 
-        if (moviment > 0.6f)
+        if (movement > 0.6f)
         {
-            // Random... esquerda, centro, direita
-            // float x = Random.Range(0f, 100f);
-            if (colliderScreen == false)
+            float x = Random.Range(0f, 100f);
+            if (x <= 40)
             {
-                if (transform.position.x < 8)
+                if (transform.position.x > -9)
                 {
-                    transform.position += new Vector3(2, 0, 0);
+                    transform.position += new Vector3(-1, 0, 0);
                 }
             }
-            else
+            else if (x >= 60)
             {
-                if (transform.position.x > -8)
+                if (transform.position.x < 9)
                 {
-                    transform.position += new Vector3(-2, 0, 0);
+                    transform.position += new Vector3(1, 0, 0);
                 }
             }
 
-            moviment = 0;
+            movement = 0;
         }
 
         Vector3 moveDirection = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, 0);
@@ -56,19 +54,9 @@ public class EnemySpawn : MonoBehaviour
             player.DecrementLife();
             gameObject.SetActive(false);
         }
-        else if (other.gameObject.tag == "ColliderRight")
-        {
-            colliderScreen = true;
-            Debug.Log("trigger right");
-        }
-        else if (other.gameObject.tag == "ColliderLeft")
-        {
-            colliderScreen = false;
-            Debug.Log("trigger left");
-        }
+
         else if (other.gameObject.tag == "ColliderDown")
         {
-            colliderScreen = true;
             if (gameObject != null)
             {
                 gameObject.SetActive(false);
