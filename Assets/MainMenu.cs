@@ -10,11 +10,6 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    public void Ranking()
-    {
-        Debug.Log("Ranking");
-    }
-
     public void Quit()
     {
         Application.Quit();

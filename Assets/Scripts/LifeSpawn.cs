@@ -5,8 +5,6 @@ using UnityEngine;
 public class LifeSpawn : MonoBehaviour
 {
     public float speed = 3.0f;
-    private bool colliderScreen = false;
-
     private Player player;
 
 
@@ -33,16 +31,7 @@ public class LifeSpawn : MonoBehaviour
             player.IncrementLife();
             gameObject.SetActive(false);
         }
-        else if (other.gameObject.tag == "ColliderRight")
-        {
-            colliderScreen = true;
-            transform.position += new Vector3(0, -1, 0);
-        }
-        else if (other.gameObject.tag == "ColliderLeft")
-        {
-            colliderScreen = true;
-            transform.position += new Vector3(0, -1, 0);
-        }
+
         else if (other.gameObject.tag == "ColliderDown")
         {
             if (gameObject != null)

@@ -20,7 +20,6 @@ public class HighScore : MonoBehaviour
     private Transform entryContainer;
     private Transform entryTemplate;
 
-    [SerializeField] public Hashtable HighScoreInfo = new Hashtable();
     public List<ScoreEntry> ScoreList = new List<ScoreEntry>();
 
     private void Awake()
@@ -32,7 +31,9 @@ public class HighScore : MonoBehaviour
 
         if (PlayerPrefs.HasKey("Score") && PlayerPrefs.HasKey("Name"))
         {
-            this.AddScoreEntry(PlayerPrefs.GetInt("Score"), PlayerPrefs.GetString("Name"));
+            int score = PlayerPrefs.GetInt("Score", 0);
+            string name = PlayerPrefs.GetString("Name", "");
+            this.AddScoreEntry(score, name);
             PlayerPrefs.DeleteKey("Score");
             PlayerPrefs.DeleteKey("Name");
         }
@@ -77,7 +78,7 @@ public class HighScore : MonoBehaviour
     {
         ScoreEntry newScoreEntry = new ScoreEntry { score = score, name = name };
 
-        string jsonString = PlayerPrefs.GetString("ScoreList");
+        string jsonString = PlayerPrefs.GetString("ScoreList", "{}");
         HighScores highscores = JsonUtility.FromJson<HighScores>(jsonString);
 
         highscores.highscoreEntryList.Add(newScoreEntry);
