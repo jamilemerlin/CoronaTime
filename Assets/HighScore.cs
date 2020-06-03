@@ -83,6 +83,11 @@ public class HighScore : MonoBehaviour
         highscores.highscoreEntryList.Add(newScoreEntry);
         highscores.highscoreEntryList.Sort((a, b) => b.score - a.score);
 
+        if (highscores.highscoreEntryList.Count > 10)
+        {
+            highscores.highscoreEntryList = highscores.highscoreEntryList.GetRange(0, 10);
+        }
+
         string json = JsonUtility.ToJson(highscores);
         PlayerPrefs.SetString("ScoreList", json);
         PlayerPrefs.Save();
